@@ -1,13 +1,83 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
+import { useRouter } from "vue-router";
 import {
   Pencil as EditIcon,
   LogOutOutline as LogoutIcon,
   PersonCircleOutline as UserIcon,
 } from "@vicons/ionicons5";
+import { api } from "../../config/api";
+
+type LoggedInUser = {
+  name?: string;
+  email?: string;
+  role?: string;
+};
+
+type MeResponse = {
+  user?: LoggedInUser;
+  data?: LoggedInUser;
+};
 
 const isOpen = ref(false);
 const dropdownRef = ref<HTMLElement | null>(null);
+const router = useRouter();
+const TOKEN_KEY = "accessToken";
+const USER_KEY = "loggedInUser";
+
+const getCachedUser = (): LoggedInUser | null => {
+  const rawUser = localStorage.getItem(USER_KEY);
+  if (!rawUser) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(rawUser) as LoggedInUser;
+  } catch {
+    localStorage.removeItem(USER_KEY);
+    return null;
+  }
+};
+
+const user = ref<LoggedInUser | null>(getCachedUser());
+
+const getLoggedInUser = async () => {
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (!token) {
+    return;
+  }
+
+  const clientTime = new Date().toISOString();
+
+  try {
+    const response = await fetch(api.user, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+        "x-client-time": clientTime,
+      },
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem(TOKEN_KEY);
+        router.push("/");
+      }
+      return;
+    }
+
+    const result: MeResponse = await response.json();
+    user.value = result.user ?? result.data ?? null;
+    if (user.value) {
+      localStorage.setItem(USER_KEY, JSON.stringify(user.value));
+    }
+  } catch (error) {
+    console.error("Get profile API error:", error);
+  }
+};
 
 const toggleDropdown = () => {
   isOpen.value = !isOpen.value;
@@ -19,8 +89,33 @@ const closeDropdown = (e: MouseEvent) => {
   }
 };
 
+const handleLogout = async () => {
+  const clientTime = new Date().toISOString();
+  const token = localStorage.getItem(TOKEN_KEY);
+
+  try {
+    await fetch(api.logout, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-client-time": clientTime,
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    });
+  } catch (error) {
+    console.error("Logout API error:", error);
+  } finally {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
+    isOpen.value = false;
+    router.push("/");
+  }
+};
+
 onMounted(() => {
   window.addEventListener("click", closeDropdown);
+  void getLoggedInUser();
 });
 
 onUnmounted(() => {
@@ -31,8 +126,10 @@ onUnmounted(() => {
 <template>
   <div class="flex items-center gap-2 relative" ref="dropdownRef">
     <div class="text-right hidden md:block leading-tight select-none">
-      <p class="text-[11px] font-bold text-[#492828]">Andri Dev</p>
-      <p class="text-[9px] text-[#492828]/50 font-medium">Administrator</p>
+      <p class="text-[11px] font-bold text-[#492828]">{{ user?.name ?? "-" }}</p>
+      <p class="text-[9px] text-[#492828]/50 font-medium">
+        {{ user?.role ?? "User" }}
+      </p>
     </div>
 
     <!-- Avatar Button -->
@@ -73,9 +170,9 @@ onUnmounted(() => {
         class="absolute right-0 top-11 w-48 bg-white rounded-xl shadow-xl border border-[#ECECEC] z-50 py-1.5 transform origin-top-right overflow-hidden"
       >
         <div class="px-3 py-2 border-b border-[#ECECEC] mb-1 bg-[#ECECEC]/20">
-          <p class="text-[12px] font-bold text-[#492828]">Andri Dev</p>
+          <p class="text-[12px] font-bold text-[#492828]">{{ user?.name ?? "-" }}</p>
           <p class="text-[10px] text-[#492828]/50 truncate">
-            andri.dev@example.com
+            {{ user?.email ?? "-" }}
           </p>
         </div>
 
@@ -108,8 +205,9 @@ onUnmounted(() => {
         <div class="my-1.5 border-t border-[#ECECEC] mx-2"></div>
 
         <div class="px-1.5">
-          <a
-            href="#"
+          <button
+            type="button"
+            @click="handleLogout"
             class="flex items-center gap-2.5 px-2 py-1.5 text-[13px] text-red-500 rounded-lg hover:bg-red-50 transition-all group/item"
           >
             <div
@@ -118,7 +216,7 @@ onUnmounted(() => {
               <LogoutIcon class="w-4 h-4" />
             </div>
             <span class="font-medium">Logout</span>
-          </a>
+          </button>
         </div>
       </div>
     </Transition>
