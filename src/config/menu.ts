@@ -1,65 +1,38 @@
-import { h, type Component } from "vue";
-import { RouterLink } from "vue-router";
-import { NIcon, type MenuOption } from "naive-ui";
 import {
   HomeOutline,
   PeopleOutline,
   GridOutline,
   SettingsOutline,
 } from "@vicons/ionicons5";
+import { markRaw, type Component } from "vue";
 
-function renderIcon(icon: Component) {
-  return () => h(NIcon, null, { default: () => h(icon) });
+export interface MenuItem {
+  label: string;
+  key: string;
+  icon: Component;
+  disabled?: boolean;
 }
 
-export const menuOptions: MenuOption[] = [
+export const menuOptions: MenuItem[] = [
   {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: {
-            name: "home",
-          },
-        },
-        { default: () => "Home" }
-      ),
+    label: "Home",
     key: "home",
-    icon: renderIcon(HomeOutline),
+    icon: markRaw(HomeOutline),
   },
   {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: {
-            name: "category",
-          },
-        },
-        { default: () => "Category" }
-      ),
+    label: "Category",
     key: "category",
-    icon: renderIcon(GridOutline),
+    icon: markRaw(GridOutline),
   },
   {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: {
-            name: "profile",
-          },
-        },
-        { default: () => "Profile" }
-      ),
+    label: "Profile",
     key: "profile",
-    icon: renderIcon(PeopleOutline),
+    icon: markRaw(PeopleOutline),
   },
-  // Item menu di bawah ini bisa ditambahkan nanti setelah rutenya dibuat di route.ts
   {
     label: "Settings",
     key: "settings",
-    icon: renderIcon(SettingsOutline),
-    disabled: true
+    icon: markRaw(SettingsOutline),
+    disabled: true,
   },
 ];

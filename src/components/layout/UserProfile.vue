@@ -1,58 +1,126 @@
 <script setup lang="ts">
-import { NAvatar, NDropdown, NButton, NIcon } from "naive-ui";
-import type { Component } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import {
   Pencil as EditIcon,
   LogOutOutline as LogoutIcon,
   PersonCircleOutline as UserIcon,
 } from "@vicons/ionicons5";
-import { h } from "vue";
 
-function renderIcon(icon: Component) {
-  return () => {
-    return h(NIcon, null, {
-      default: () => h(icon),
-    });
-  };
-}
+const isOpen = ref(false);
+const dropdownRef = ref<HTMLElement | null>(null);
 
-const options = [
-  {
-    label: "User Profile",
-    key: "profile",
-    icon: renderIcon(UserIcon),
-  },
-  {
-    label: "Edit Profile",
-    key: "editProfile",
-    icon: renderIcon(EditIcon),
-  },
-  {
-    label: "Logout",
-    key: "logout",
-    icon: renderIcon(LogoutIcon),
-  },
-];
+const toggleDropdown = () => {
+  isOpen.value = !isOpen.value;
+};
+
+const closeDropdown = (e: MouseEvent) => {
+  if (dropdownRef.value && !dropdownRef.value.contains(e.target as Node)) {
+    isOpen.value = false;
+  }
+};
+
+onMounted(() => {
+  window.addEventListener("click", closeDropdown);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("click", closeDropdown);
+});
 </script>
 
 <template>
-  <div class="flex items-center gap-3">
-    <n-dropdown trigger="click" :options="options" :style="{ width: '160px' }">
-      <n-button quaternary circle class="p-0! h-10! w-10! overflow-hidden">
+  <div class="flex items-center gap-2 relative" ref="dropdownRef">
+    <div class="text-right hidden md:block leading-tight select-none">
+      <p class="text-[11px] font-bold text-[#492828]">Andri Dev</p>
+      <p class="text-[9px] text-[#492828]/50 font-medium">Administrator</p>
+    </div>
+
+    <!-- Avatar Button -->
+    <button
+      @click="toggleDropdown"
+      class="flex items-center focus:outline-none p-0! h-9 w-9 relative group"
+    >
+      <!-- Gradient Border Wrapper -->
+      <div
+        class="w-9 h-9 rounded-full! bg-linear-to-tr from-[#84934A] to-[#656D3F] p-px shadow-sm transition-transform duration-300 group-hover:scale-105"
+      >
         <div
-          class="w-10 h-10 rounded-full! bg-linear-to-tr from-blue-500 to-indigo-600 p-px shadow-lg!"
+          class="bg-white w-full h-full rounded-full! p-px flex items-center justify-center overflow-hidden"
         >
-          <div
-            class="bg-white w-full h-full rounded-full overflow-hidden p-px flex items-center justify-center"
-          >
-            <img
-              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Andri"
-              alt="Avatar"
-              class="w-full h-full object-cover rounded-full"
-            />
-          </div>
+          <img
+            src="https://api.dicebear.com/7.x/avataaars/svg?seed=Andri"
+            alt="Avatar"
+            class="w-full h-full object-cover rounded-full!"
+          />
         </div>
-      </n-button>
-    </n-dropdown>
+      </div>
+      <span
+        class="absolute top-0 right-0 block h-3 w-3 rounded-full! bg-[#84934A] border-2 border-white shadow-sm"
+      ></span>
+    </button>
+
+    <!-- Dropdown Menu (Smooth Transition) -->
+    <Transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="transform scale-95 opacity-0 -translate-y-2"
+      enter-to-class="transform scale-100 opacity-100 translate-y-0"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="transform scale-100 opacity-100 translate-y-0"
+      leave-to-class="transform scale-95 opacity-0 -translate-y-2"
+    >
+      <div
+        v-if="isOpen"
+        class="absolute right-0 top-11 w-48 bg-white rounded-xl shadow-xl border border-[#ECECEC] z-50 py-1.5 transform origin-top-right overflow-hidden"
+      >
+        <div class="px-3 py-2 border-b border-[#ECECEC] mb-1 bg-[#ECECEC]/20">
+          <p class="text-[12px] font-bold text-[#492828]">Andri Dev</p>
+          <p class="text-[10px] text-[#492828]/50 truncate">
+            andri.dev@example.com
+          </p>
+        </div>
+
+        <div class="px-1.5 space-y-0.5">
+          <a
+            href="#"
+            class="flex items-center gap-2.5 px-2 py-1.5 text-[13px] text-[#492828]/80 rounded-lg hover:bg-[#656D3F]/10 hover:text-[#656D3F] transition-all group/item"
+          >
+            <div
+              class="w-7 h-7 rounded-md bg-[#656D3F]/5 flex items-center justify-center group-hover/item:bg-white transition-colors"
+            >
+              <UserIcon class="w-4 h-4 text-[#656D3F]" />
+            </div>
+            <span class="font-medium">Profile</span>
+          </a>
+
+          <a
+            href="#"
+            class="flex items-center gap-2.5 px-2 py-1.5 text-[13px] text-[#492828]/80 rounded-lg hover:bg-[#656D3F]/10 hover:text-[#656D3F] transition-all group/item"
+          >
+            <div
+              class="w-7 h-7 rounded-md bg-[#656D3F]/5 flex items-center justify-center group-hover/item:bg-white transition-colors"
+            >
+              <EditIcon class="w-4 h-4 text-[#656D3F]" />
+            </div>
+            <span class="font-medium">Settings</span>
+          </a>
+        </div>
+
+        <div class="my-1.5 border-t border-[#ECECEC] mx-2"></div>
+
+        <div class="px-1.5">
+          <a
+            href="#"
+            class="flex items-center gap-2.5 px-2 py-1.5 text-[13px] text-red-500 rounded-lg hover:bg-red-50 transition-all group/item"
+          >
+            <div
+              class="w-7 h-7 rounded-md bg-red-50 flex items-center justify-center group-hover/item:bg-white transition-colors"
+            >
+              <LogoutIcon class="w-4 h-4" />
+            </div>
+            <span class="font-medium">Logout</span>
+          </a>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
