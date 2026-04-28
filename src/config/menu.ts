@@ -3,6 +3,9 @@ import {
   PeopleOutline,
   GridOutline,
   SettingsOutline,
+  ShieldOutline,
+  WalletOutline,
+  PersonOutline,
 } from "@vicons/ionicons5";
 import { markRaw, type Component } from "vue";
 
@@ -23,6 +26,21 @@ export const menuOptions: MenuItem[] = [
     label: "Category",
     key: "category",
     icon: markRaw(GridOutline),
+  },
+  {
+    label: "Role",
+    key: "role",
+    icon: markRaw(ShieldOutline),
+  },
+  {
+    label: "Expense",
+    key: "expense",
+    icon: markRaw(WalletOutline),
+  },
+  {
+    label: "Customer",
+    key: "customer",
+    icon: markRaw(PersonOutline),
   },
   {
     label: "Profile",

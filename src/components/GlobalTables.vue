@@ -15,15 +15,15 @@ const props = defineProps<{
 
 <template>
   <div
-    class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default"
+    class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default w-full"
   >
-    <table class="w-full text-sm text-left rtl:text-right text-body">
+    <table class="w-full text-xs sm:text-sm text-left rtl:text-right text-body whitespace-nowrap">
       <thead
-        class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium"
+        class="text-xs sm:text-sm text-body bg-neutral-secondary-medium border-b border-default-medium"
       >
         <tr>
           <!-- Checkbox Header -->
-          <th v-if="showCheckbox" scope="col" class="p-4">
+          <th v-if="showCheckbox" scope="col" class="p-3 sm:p-4 w-4">
             <div class="flex items-center">
               <input
                 type="checkbox"
@@ -37,7 +37,7 @@ const props = defineProps<{
             v-for="col in columns"
             :key="col.key"
             scope="col"
-            class="px-6 py-3 font-medium"
+            class="px-3 py-2 sm:px-6 sm:py-3 font-medium"
           >
             {{ col.label }}
           </th>
@@ -50,7 +50,7 @@ const props = defineProps<{
           class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium"
         >
           <!-- Checkbox Cell -->
-          <td v-if="showCheckbox" class="w-4 p-4">
+          <td v-if="showCheckbox" class="p-3 sm:p-4 w-4">
             <div class="flex items-center">
               <input
                 type="checkbox"
@@ -60,7 +60,7 @@ const props = defineProps<{
           </td>
 
           <!-- Dynamic Cells -->
-          <td v-for="col in columns" :key="col.key" class="px-6 py-4">
+          <td v-for="col in columns" :key="col.key" class="px-3 py-3 sm:px-6 sm:py-4">
             <!-- 
               Slot Dinamis: memungkinkan Anda mengubah tampilan kolom tertentu.
               Contoh saat menggunakan komponen:
@@ -78,7 +78,7 @@ const props = defineProps<{
         <tr v-if="data.length === 0">
           <td
             :colspan="showCheckbox ? columns.length + 1 : columns.length"
-            class="px-6 py-8 text-center text-gray-500"
+            class="px-3 py-6 sm:px-6 sm:py-8 text-center text-gray-500"
           >
             Data tidak tersedia
           </td>

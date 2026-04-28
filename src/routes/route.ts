@@ -1,8 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../auth/Login.vue'
 import Home from '../pages/Home.vue'
-import Category from '../pages/Category.vue'
-import Profile from '../pages/Profile.vue'
+import Category from '../pages/category/App.vue'
+import Role from '../pages/roles/App.vue'
+import Expense from '../pages/expenses/App.vue'
+import Customer from '../pages/customers/App.vue'
+import Profile from '../pages/profile/App.vue'
 import MainLayout from '../layouts/MainLayout.vue'
 
 const isAuthenticated = () => localStorage.getItem('isLoggedIn') === 'true'
@@ -28,6 +31,21 @@ const routes = [
         path: 'category',
         name: 'category',
         component: Category
+      },
+      {
+        path: 'role',
+        name: 'role',
+        component: Role
+      },
+      {
+        path: 'expense',
+        name: 'expense',
+        component: Expense
+      },
+      {
+        path: 'customer',
+        name: 'customer',
+        component: Customer
       },
       {
         path: 'profile',
