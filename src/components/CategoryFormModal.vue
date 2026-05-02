@@ -1,41 +1,41 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue'
 
-type Mode = "create" | "edit" | "view";
+type Mode = 'create' | 'edit' | 'view'
 
 const props = defineProps<{
   modelValue: {
-    name: string;
-    type: string;
-    status: boolean;
-  };
-  mode?: Mode;
-  open: boolean;
-}>();
+    name: string
+    type: string
+    status: boolean
+  }
+  mode?: Mode
+  open: boolean
+}>()
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: typeof props.modelValue): void;
-  (e: "close"): void;
-  (e: "submit"): void;
-}>();
+  (e: 'update:modelValue', value: typeof props.modelValue): void
+  (e: 'close'): void
+  (e: 'submit'): void
+}>()
 
 const localCategory = computed({
   get: () => props.modelValue,
-  set: (val) => emit("update:modelValue", val),
-});
+  set: (val) => emit('update:modelValue', val),
+})
 
-const isReadonly = computed(() => props.mode === "view");
+const isReadonly = computed(() => props.mode === 'view')
 
 const title = computed(() => {
-  if (props.mode === "edit") return "Edit Kategori";
-  if (props.mode === "view") return "Detail Kategori";
-  return "Tambah Kategori";
-});
+  if (props.mode === 'edit') return 'Edit Kategori'
+  if (props.mode === 'view') return 'Detail Kategori'
+  return 'Tambah Kategori'
+})
 
 const submitLabel = computed(() => {
-  if (props.mode === "edit") return "Update";
-  return "Simpan";
-});
+  if (props.mode === 'edit') return 'Update'
+  return 'Simpan'
+})
 </script>
 
 <template>
@@ -152,7 +152,7 @@ const submitLabel = computed(() => {
             type="button"
             class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 transition-colors shadow-sm"
           >
-            {{ isReadonly ? "Tutup" : "Batal" }}
+            {{ isReadonly ? 'Tutup' : 'Batal' }}
           </button>
           <button
             v-if="!isReadonly"

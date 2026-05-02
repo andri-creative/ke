@@ -1,185 +1,237 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Modern Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
+      /* Modern Scrollbar Styling */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
 
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
 
-        ::-webkit-scrollbar-thumb {
-            background: #d1d1d1;
-            border-radius: 10px;
-            /* Memberikan efek jarak dengan border transparan */
-            border: 1px solid transparent;
-            background-clip: padding-box;
-        }
+      ::-webkit-scrollbar-thumb {
+        background: #d1d1d1;
+        border-radius: 10px;
+        /* Memberikan efek jarak dengan border transparan */
+        border: 1px solid transparent;
+        background-clip: padding-box;
+      }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #b5b5b5;
-        }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #b5b5b5;
+      }
 
-        /* Mencegah layout bergeser saat scrollbar muncul */
-        .overflow-y-auto {
-            scrollbar-gutter: stable;
-            scroll-behavior: smooth;
-        }
+      /* Mencegah layout bergeser saat scrollbar muncul */
+      .overflow-y-auto {
+        scrollbar-gutter: stable;
+        scroll-behavior: smooth;
+      }
     </style>
-</head>
+  </head>
 
-<body class="h-screen flex flex-col overflow-hidden">
-    <header class="bg-[#ECECEC] px-6 py-2.5 flex items-center justify-between z-20">
-        <!-- Logo Section -->
-        <div class="flex items-center gap-2">
-            <div class="bg-blue-600 p-1.5 rounded-lg">
-                <i data-lucide="zap" class="text-white w-5 h-5"></i>
-            </div>
-            <span class="font-bold text-xl text-gray-800 tracking-tight hidden sm:block">Andri Dev</span>
+  <body class="h-screen flex flex-col overflow-hidden">
+    <header
+      class="bg-[#ECECEC] px-6 py-2.5 flex items-center justify-between z-20"
+    >
+      <!-- Logo Section -->
+      <div class="flex items-center gap-2">
+        <div class="bg-blue-600 p-1.5 rounded-lg">
+          <i data-lucide="zap" class="text-white w-5 h-5"></i>
         </div>
+        <span
+          class="font-bold text-xl text-gray-800 tracking-tight hidden sm:block"
+          >Andri Dev</span
+        >
+      </div>
 
-        <!-- Search Bar Area -->
-        <div class="flex-1 max-w-md mx-8">
-            <div class="relative flex items-center group">
-                <i data-lucide="search"
-                    class="absolute left-3 text-gray-400 w-4 h-4 group-focus-within:text-blue-500"></i>
-                <input type="text" placeholder="Cari sesuatu..."
-                    class="w-full bg-gray-100 border-none pl-10 pr-4 py-2 rounded-xl text-sm focus:ring-2 focus:ring-blue-100 focus:bg-white transition-all outline-none">
-            </div>
+      <!-- Search Bar Area -->
+      <div class="flex-1 max-w-md mx-8">
+        <div class="relative flex items-center group">
+          <i
+            data-lucide="search"
+            class="absolute left-3 text-gray-400 w-4 h-4 group-focus-within:text-blue-500"
+          ></i>
+          <input
+            type="text"
+            placeholder="Cari sesuatu..."
+            class="w-full bg-gray-100 border-none pl-10 pr-4 py-2 rounded-xl text-sm focus:ring-2 focus:ring-blue-100 focus:bg-white transition-all outline-none"
+          />
         </div>
+      </div>
 
-        <!-- User Profile Area -->
-        <div class="flex items-center gap-3">
-            <div class="text-right hidden md:block">
-                <p class="text-xs font-bold text-gray-700">Andri Dev</p>
-                <p class="text-[10px] text-gray-400 font-medium">Administrator</p>
-            </div>
-            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 p-[2px] shadow-lg">
-                <div class="bg-white w-full h-full rounded-full overflow-hidden p-[1px]">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Andri" alt="Avatar"
-                        class="w-full h-full object-cover">
-                </div>
-            </div>
+      <!-- User Profile Area -->
+      <div class="flex items-center gap-3">
+        <div class="text-right hidden md:block">
+          <p class="text-xs font-bold text-gray-700">Andri Dev</p>
+          <p class="text-[10px] text-gray-400 font-medium">Administrator</p>
         </div>
+        <div
+          class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 p-[2px] shadow-lg"
+        >
+          <div
+            class="bg-white w-full h-full rounded-full overflow-hidden p-[1px]"
+          >
+            <img
+              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Andri"
+              alt="Avatar"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
     </header>
     <div class="bg-[#ECECEC] pb-4 flex-1 flex flex-row min-h-0">
-        <!-- Sidebar -->
-        <div id="sidebar"
-            class="bg-[#ECECEC] w-64 transition-all duration-300 flex flex-col justify-between py-4 px-3 min-h-0">
-            <div class="flex flex-col gap-2 overflow-hidden">
-                <!-- Logo / Brand -->
-                <div class="flex items-center gap-3 px-3 mb-6 overflow-hidden h-10">
-                    <div class="bg-blue-600 p-2 rounded-lg flex-shrink-0">
-                        <i data-lucide="layers" class="text-white w-5 h-5"></i>
-                    </div>
-                    <span class="font-bold text-gray-700 whitespace-nowrap sidebar-text">Andri Dev</span>
-                </div>
-
-                <!-- Menu Items -->
-                <a href="#"
-                    class="flex items-center gap-3 p-3 text-gray-600 hover:bg-white hover:text-blue-600 rounded-xl transition-all group overflow-hidden">
-                    <i data-lucide="home" class="w-6 h-6 flex-shrink-0"></i>
-                    <span class="sidebar-text font-medium whitespace-nowrap">Home</span>
-                </a>
-                <a href="#"
-                    class="flex items-center gap-3 p-3 text-gray-600 hover:bg-white hover:text-blue-600 rounded-xl transition-all group overflow-hidden">
-                    <i data-lucide="layout-dashboard" class="w-6 h-6 flex-shrink-0"></i>
-                    <span class="sidebar-text font-medium whitespace-nowrap">Dashboard</span>
-                </a>
-                <a href="#"
-                    class="flex items-center gap-3 p-3 text-gray-600 hover:bg-white hover:text-blue-600 rounded-xl transition-all group overflow-hidden">
-                    <i data-lucide="folder-kanban" class="w-6 h-6 flex-shrink-0"></i>
-                    <span class="sidebar-text font-medium whitespace-nowrap">Projects</span>
-                </a>
-                <a href="#"
-                    class="flex items-center gap-3 p-3 text-gray-600 hover:bg-white hover:text-blue-600 rounded-xl transition-all group overflow-hidden">
-                    <i data-lucide="users" class="w-6 h-6 flex-shrink-0"></i>
-                    <span class="sidebar-text font-medium whitespace-nowrap">Team</span>
-                </a>
-                <a href="#"
-                    class="flex items-center gap-3 p-3 text-gray-600 hover:bg-white hover:text-blue-600 rounded-xl transition-all group overflow-hidden">
-                    <i data-lucide="settings" class="w-6 h-6 flex-shrink-0"></i>
-                    <span class="sidebar-text font-medium whitespace-nowrap">Settings</span>
-                </a>
+      <!-- Sidebar -->
+      <div
+        id="sidebar"
+        class="bg-[#ECECEC] w-64 transition-all duration-300 flex flex-col justify-between py-4 px-3 min-h-0"
+      >
+        <div class="flex flex-col gap-2 overflow-hidden">
+          <!-- Logo / Brand -->
+          <div class="flex items-center gap-3 px-3 mb-6 overflow-hidden h-10">
+            <div class="bg-blue-600 p-2 rounded-lg flex-shrink-0">
+              <i data-lucide="layers" class="text-white w-5 h-5"></i>
             </div>
+            <span class="font-bold text-gray-700 whitespace-nowrap sidebar-text"
+              >Andri Dev</span
+            >
+          </div>
 
-            <!-- Bottom Collapse Button -->
-            <button id="toggleBtn"
-                class="flex items-center gap-3 p-3 text-gray-500 hover:bg-white hover:text-blue-600 rounded-xl transition-all overflow-hidden cursor-pointer border-t border-gray-300 pt-4">
-                <i id="toggleIcon" data-lucide="chevron-left" class="w-6 h-6 flex-shrink-0"></i>
-                <span class="sidebar-text font-medium whitespace-nowrap">Collapse Sidebar</span>
-            </button>
-        </div>
-        <div class="bg-[#FBFBFB] flex-1 flex flex-col ms-4 me-4 rounded-xl min-h-0">
-            <div class="flex flex-col w-full h-full min-h-0">
-                <!-- Panel Header (Breadcrumb) -->
-
-                <div class="py-5 border-b border-gray-500">
-                    <nav class="flex items-center text-sm font-medium pr-3 pl-3">
-                        <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">Accola</a>
-                        <span class="mx-2 text-gray-300 font-light">/</span>
-                        <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">Persija</a>
-                        <span class="mx-2 text-gray-300 font-light">/</span>
-                        <span class="text-gray-800 font-bold tracking-tight">persija-calendar</span>
-                    </nav>
-                </div>
-
-                <!-- Paneh Content -->
-                <div class="flex-1 w-full flex flex-col min-h-0">
-                    <div class="flex-1 overflow-y-auto pr-3 pl-3">
-                        <div class="pb-2">
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+          <!-- Menu Items -->
+          <a
+            href="#"
+            class="flex items-center gap-3 p-3 text-gray-600 hover:bg-white hover:text-blue-600 rounded-xl transition-all group overflow-hidden"
+          >
+            <i data-lucide="home" class="w-6 h-6 flex-shrink-0"></i>
+            <span class="sidebar-text font-medium whitespace-nowrap">Home</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center gap-3 p-3 text-gray-600 hover:bg-white hover:text-blue-600 rounded-xl transition-all group overflow-hidden"
+          >
+            <i data-lucide="layout-dashboard" class="w-6 h-6 flex-shrink-0"></i>
+            <span class="sidebar-text font-medium whitespace-nowrap"
+              >Dashboard</span
+            >
+          </a>
+          <a
+            href="#"
+            class="flex items-center gap-3 p-3 text-gray-600 hover:bg-white hover:text-blue-600 rounded-xl transition-all group overflow-hidden"
+          >
+            <i data-lucide="folder-kanban" class="w-6 h-6 flex-shrink-0"></i>
+            <span class="sidebar-text font-medium whitespace-nowrap"
+              >Projects</span
+            >
+          </a>
+          <a
+            href="#"
+            class="flex items-center gap-3 p-3 text-gray-600 hover:bg-white hover:text-blue-600 rounded-xl transition-all group overflow-hidden"
+          >
+            <i data-lucide="users" class="w-6 h-6 flex-shrink-0"></i>
+            <span class="sidebar-text font-medium whitespace-nowrap">Team</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center gap-3 p-3 text-gray-600 hover:bg-white hover:text-blue-600 rounded-xl transition-all group overflow-hidden"
+          >
+            <i data-lucide="settings" class="w-6 h-6 flex-shrink-0"></i>
+            <span class="sidebar-text font-medium whitespace-nowrap"
+              >Settings</span
+            >
+          </a>
         </div>
 
+        <!-- Bottom Collapse Button -->
+        <button
+          id="toggleBtn"
+          class="flex items-center gap-3 p-3 text-gray-500 hover:bg-white hover:text-blue-600 rounded-xl transition-all overflow-hidden cursor-pointer border-t border-gray-300 pt-4"
+        >
+          <i
+            id="toggleIcon"
+            data-lucide="chevron-left"
+            class="w-6 h-6 flex-shrink-0"
+          ></i>
+          <span class="sidebar-text font-medium whitespace-nowrap"
+            >Collapse Sidebar</span
+          >
+        </button>
+      </div>
+      <div
+        class="bg-[#FBFBFB] flex-1 flex flex-col ms-4 me-4 rounded-xl min-h-0"
+      >
+        <div class="flex flex-col w-full h-full min-h-0">
+          <!-- Panel Header (Breadcrumb) -->
+
+          <div class="py-5 border-b border-gray-500">
+            <nav class="flex items-center text-sm font-medium pr-3 pl-3">
+              <a
+                href="#"
+                class="text-gray-400 hover:text-blue-600 transition-colors"
+                >Accola</a
+              >
+              <span class="mx-2 text-gray-300 font-light">/</span>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-blue-600 transition-colors"
+                >Persija</a
+              >
+              <span class="mx-2 text-gray-300 font-light">/</span>
+              <span class="text-gray-800 font-bold tracking-tight"
+                >persija-calendar</span
+              >
+            </nav>
+          </div>
+
+          <!-- Paneh Content -->
+          <div class="flex-1 w-full flex flex-col min-h-0">
+            <div class="flex-1 overflow-y-auto pr-3 pl-3">
+              <div class="pb-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
+      // Initialize Lucide Icons
+      lucide.createIcons()
 
-        const sidebar = document.getElementById('sidebar');
-        const toggleBtn = document.getElementById('toggleBtn');
-        const sidebarTexts = document.querySelectorAll('.sidebar-text');
-        const toggleIcon = document.getElementById('toggleIcon');
+      const sidebar = document.getElementById('sidebar')
+      const toggleBtn = document.getElementById('toggleBtn')
+      const sidebarTexts = document.querySelectorAll('.sidebar-text')
+      const toggleIcon = document.getElementById('toggleIcon')
 
-        toggleBtn.addEventListener('click', () => {
-            const isCollapsed = sidebar.classList.contains('w-64');
+      toggleBtn.addEventListener('click', () => {
+        const isCollapsed = sidebar.classList.contains('w-64')
 
-            if (isCollapsed) {
-                // Collapse
-                sidebar.classList.remove('w-64');
-                sidebar.classList.add('w-20');
-                sidebarTexts.forEach(text => text.classList.add('hidden'));
+        if (isCollapsed) {
+          // Collapse
+          sidebar.classList.remove('w-64')
+          sidebar.classList.add('w-20')
+          sidebarTexts.forEach((text) => text.classList.add('hidden'))
 
-                // Change Icon
-                toggleIcon.setAttribute('data-lucide', 'chevron-right');
-            } else {
-                // Expand
-                sidebar.classList.remove('w-20');
-                sidebar.classList.add('w-64');
-                sidebarTexts.forEach(text => text.classList.remove('hidden'));
+          // Change Icon
+          toggleIcon.setAttribute('data-lucide', 'chevron-right')
+        } else {
+          // Expand
+          sidebar.classList.remove('w-20')
+          sidebar.classList.add('w-64')
+          sidebarTexts.forEach((text) => text.classList.remove('hidden'))
 
-                // Change Icon
-                toggleIcon.setAttribute('data-lucide', 'chevron-left');
-            }
+          // Change Icon
+          toggleIcon.setAttribute('data-lucide', 'chevron-left')
+        }
 
-            // Re-render icons after changing attributes
-            lucide.createIcons();
-        });
+        // Re-render icons after changing attributes
+        lucide.createIcons()
+      })
     </script>
-</body>
-
+  </body>
 </html>

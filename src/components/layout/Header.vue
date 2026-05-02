@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { SearchOutline, FlashOutline, MenuOutline } from "@vicons/ionicons5";
-import UserProfile from "./UserProfile.vue";
+import { SearchOutline, MenuOutline } from '@vicons/ionicons5'
+import UserProfile from './UserProfile.vue'
 
-const emit = defineEmits(["toggleSidebar"]);
+const emit = defineEmits(['toggleSidebar'])
 </script>
 
 <template>
@@ -16,9 +16,15 @@ const emit = defineEmits(["toggleSidebar"]);
       <!-- Logo (Fixed size w-10 to match Sidebar) -->
       <div class="flex items-center gap-3">
         <div
-          class="bg-[#84934A]! rounded-full! flex items-center justify-center w-10 h-10 shrink-0 shadow-sm"
-        >
-          <FlashOutline class="text-white w-5 h-5" />
+          class="rounded-full! flex items-center justify-center w-10 h-10 shrink-0 shadow-sm overflow-hidden"
+        > 
+          <img
+            src="/favicon.svg"
+            alt=""
+            class="w-10 h-10 object-cover"
+            width="28"
+            height="28"
+          />
         </div>
       </div>
       <button

@@ -1,42 +1,42 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed } from 'vue'
 
-type Mode = "create" | "edit" | "view";
+type Mode = 'create' | 'edit' | 'view'
 
 const props = defineProps<{
   modelValue: {
-    name: string;
-    slug: string;
-    description: string;
-    status: boolean;
-  };
-  mode?: Mode;
-  open: boolean;
-}>();
+    name: string
+    slug: string
+    description: string
+    status: boolean
+  }
+  mode?: Mode
+  open: boolean
+}>()
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: typeof props.modelValue): void;
-  (e: "close"): void;
-  (e: "submit"): void;
-}>();
+  (e: 'update:modelValue', value: typeof props.modelValue): void
+  (e: 'close'): void
+  (e: 'submit'): void
+}>()
 
 const localRole = computed({
   get: () => props.modelValue,
-  set: (val) => emit("update:modelValue", val),
-});
+  set: (val) => emit('update:modelValue', val),
+})
 
-const isReadonly = computed(() => props.mode === "view");
+const isReadonly = computed(() => props.mode === 'view')
 
 const title = computed(() => {
-  if (props.mode === "edit") return "Edit Role";
-  if (props.mode === "view") return "Detail Role";
-  return "Tambah Role";
-});
+  if (props.mode === 'edit') return 'Edit Role'
+  if (props.mode === 'view') return 'Detail Role'
+  return 'Tambah Role'
+})
 
 const submitLabel = computed(() => {
-  if (props.mode === "edit") return "Update";
-  return "Simpan";
-});
+  if (props.mode === 'edit') return 'Update'
+  return 'Simpan'
+})
 </script>
 
 <template>
@@ -170,7 +170,7 @@ const submitLabel = computed(() => {
             type="button"
             class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 transition-colors shadow-sm"
           >
-            {{ isReadonly ? "Tutup" : "Batal" }}
+            {{ isReadonly ? 'Tutup' : 'Batal' }}
           </button>
           <button
             v-if="!isReadonly"
@@ -179,7 +179,8 @@ const submitLabel = computed(() => {
             class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 transition-colors shadow-sm"
             :disabled="!localRole.name.trim() || !localRole.slug.trim()"
             :class="{
-              'opacity-50 cursor-not-allowed': !localRole.name.trim() || !localRole.slug.trim(),
+              'opacity-50 cursor-not-allowed':
+                !localRole.name.trim() || !localRole.slug.trim(),
             }"
           >
             {{ submitLabel }}

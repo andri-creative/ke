@@ -1,67 +1,67 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
-import { useRouter } from "vue-router";
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import {
   Pencil as EditIcon,
   LogOutOutline as LogoutIcon,
   PersonCircleOutline as UserIcon,
-} from "@vicons/ionicons5";
-import { authService, type LoggedInUser } from "../../services/authService";
+} from '@vicons/ionicons5'
+import { authService, type LoggedInUser } from '../../services/authService'
 
-const isOpen = ref(false);
-const dropdownRef = ref<HTMLElement | null>(null);
-const router = useRouter();
+const isOpen = ref(false)
+const dropdownRef = ref<HTMLElement | null>(null)
+const router = useRouter()
 
-const user = ref<LoggedInUser | null>(authService.getCachedUser());
+const user = ref<LoggedInUser | null>(authService.getCachedUser())
 
 const getLoggedInUser = async () => {
   try {
-    const fetchedUser = await authService.fetchUser();
+    const fetchedUser = await authService.fetchUser()
     if (fetchedUser) {
-      user.value = fetchedUser;
+      user.value = fetchedUser
     }
   } catch (error: any) {
-    console.error("Get profile error:", error);
-    if (error.message === "Unauthorized") {
-      router.push("/");
+    console.error('Get profile error:', error)
+    if (error.message === 'Unauthorized') {
+      router.push('/')
     }
   }
-};
+}
 
 const toggleDropdown = () => {
-  isOpen.value = !isOpen.value;
-};
+  isOpen.value = !isOpen.value
+}
 
 const closeDropdown = (e: MouseEvent) => {
   if (dropdownRef.value && !dropdownRef.value.contains(e.target as Node)) {
-    isOpen.value = false;
+    isOpen.value = false
   }
-};
+}
 
 const handleLogout = async () => {
-  await authService.logout();
-  isOpen.value = false;
-  router.push("/");
-};
+  await authService.logout()
+  isOpen.value = false
+  router.push('/')
+}
 
 onMounted(() => {
-  window.addEventListener("click", closeDropdown);
-  void getLoggedInUser();
-});
+  window.addEventListener('click', closeDropdown)
+  void getLoggedInUser()
+})
 
 onUnmounted(() => {
-  window.removeEventListener("click", closeDropdown);
-});
+  window.removeEventListener('click', closeDropdown)
+})
 </script>
 
 <template>
   <div class="flex items-center gap-2 relative" ref="dropdownRef">
     <div class="text-right hidden md:block leading-tight select-none">
       <p class="text-[11px] font-bold text-[#492828]">
-        {{ user?.name ?? "-" }}
+        {{ user?.name ?? '-' }}
       </p>
       <p class="text-[9px] text-[#492828]/50 font-medium">
-        {{ user?.role ?? "User" }}
+        {{ user?.role ?? 'User' }}
       </p>
     </div>
 
@@ -104,10 +104,10 @@ onUnmounted(() => {
       >
         <div class="px-3 py-2 border-b border-[#ECECEC] mb-1 bg-[#ECECEC]/20">
           <p class="text-[12px] font-bold text-[#492828]">
-            {{ user?.name ?? "-" }}
+            {{ user?.name ?? '-' }}
           </p>
           <p class="text-[10px] text-[#492828]/50 truncate">
-            {{ user?.email ?? "-" }}
+            {{ user?.email ?? '-' }}
           </p>
         </div>
 

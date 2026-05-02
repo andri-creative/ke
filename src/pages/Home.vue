@@ -1,65 +1,65 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { api } from "../config/api";
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { api } from '../config/api'
 
 type UserResponse = {
-  message?: string;
-  user?: unknown;
-  data?: unknown;
-};
+  message?: string
+  user?: unknown
+  data?: unknown
+}
 
-const user = ref<unknown>(null);
-const isLoading = ref(false);
-const errorMessage = ref("");
-const router = useRouter();
-const TOKEN_KEY = "accessToken";
+const user = ref<unknown>(null)
+const isLoading = ref(false)
+const errorMessage = ref('')
+const router = useRouter()
+const TOKEN_KEY = 'accessToken'
 
 const getUser = async () => {
-  isLoading.value = true;
-  errorMessage.value = "";
+  isLoading.value = true
+  errorMessage.value = ''
 
   try {
-    const token = localStorage.getItem(TOKEN_KEY);
+    const token = localStorage.getItem(TOKEN_KEY)
     if (!token) {
-      throw new Error("Token login tidak ditemukan. Silakan login ulang.");
+      throw new Error('Token login tidak ditemukan. Silakan login ulang.')
     }
 
-    const clientTime = new Date().toISOString();
+    const clientTime = new Date().toISOString()
     const response = await fetch(api.user, {
-      method: "GET",
-      credentials: "include",
+      method: 'GET',
+      credentials: 'include',
       headers: {
-        Accept: "application/json",
+        Accept: 'application/json',
         Authorization: `Bearer ${token}`,
-        "x-client-time": clientTime,
+        'x-client-time': clientTime,
       },
-    });
+    })
 
     if (!response.ok) {
       if (response.status === 401) {
-        localStorage.removeItem("isLoggedIn");
-        localStorage.removeItem(TOKEN_KEY);
-        router.push("/");
+        localStorage.removeItem('isLoggedIn')
+        localStorage.removeItem(TOKEN_KEY)
+        router.push('/')
       }
-      throw new Error(`Gagal ambil data user (${response.status})`);
+      throw new Error(`Gagal ambil data user (${response.status})`)
     }
 
-    const data: UserResponse = await response.json();
-    user.value = data.user ?? data.data ?? null;
+    const data: UserResponse = await response.json()
+    user.value = data.user ?? data.data ?? null
   } catch (error) {
     errorMessage.value =
       error instanceof Error
         ? error.message
-        : "Terjadi kesalahan saat mengambil data user.";
+        : 'Terjadi kesalahan saat mengambil data user.'
   } finally {
-    isLoading.value = false;
+    isLoading.value = false
   }
-};
+}
 
 onMounted(() => {
-  void getUser();
-});
+  void getUser()
+})
 </script>
 
 <template>

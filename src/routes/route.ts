@@ -15,7 +15,7 @@ const routes = [
     path: '/',
     name: 'login',
     component: Login,
-    meta: { guestOnly: true }
+    meta: { guestOnly: true },
   },
   {
     path: '/',
@@ -25,40 +25,40 @@ const routes = [
       {
         path: 'home',
         name: 'home',
-        component: Home
+        component: Home,
       },
       {
         path: 'category',
         name: 'category',
-        component: Category
+        component: Category,
       },
       {
         path: 'role',
         name: 'role',
-        component: Role
+        component: Role,
       },
       {
         path: 'expense',
         name: 'expense',
-        component: Expense
+        component: Expense,
       },
       {
         path: 'customer',
         name: 'customer',
-        component: Customer
+        component: Customer,
       },
       {
         path: 'profile',
         name: 'profile',
-        component: Profile
-      }
-    ]
-  }
+        component: Profile,
+      },
+    ],
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 })
 
 router.beforeEach((to) => {

@@ -1,23 +1,32 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
-import { defineProps } from "vue";
-
 export interface TableColumn {
-  key: string;
-  label: string;
+  key: string
+  label: string
 }
 
-const props = defineProps<{
-  columns: TableColumn[];
-  data: T[];
-  showCheckbox?: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    columns: TableColumn[]
+    data: T[]
+    showCheckbox?: boolean
+    /** Saat true dan data kosong, tampilkan memuat (bukan “data tidak tersedia”) */
+    loading?: boolean
+  }>(),
+  { loading: false },
+)
+
+defineSlots<{
+  [key: string]: (slotProps: { row: T; index: number }) => any
+}>()
 </script>
 
 <template>
   <div
-    class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default w-full"
+    class="relative overflow-x-auto overflow-y-visible bg-neutral-primary-soft shadow-xs rounded-base border border-default w-full"
   >
-    <table class="w-full text-xs sm:text-sm text-left rtl:text-right text-body whitespace-nowrap">
+    <table
+      class="w-full text-xs sm:text-sm text-left rtl:text-right text-body whitespace-nowrap"
+    >
       <thead
         class="text-xs sm:text-sm text-body bg-neutral-secondary-medium border-b border-default-medium"
       >
@@ -60,7 +69,11 @@ const props = defineProps<{
           </td>
 
           <!-- Dynamic Cells -->
-          <td v-for="col in columns" :key="col.key" class="px-3 py-3 sm:px-6 sm:py-4">
+          <td
+            v-for="col in columns"
+            :key="col.key"
+            class="relative overflow-visible px-3 py-3 sm:px-6 sm:py-4"
+          >
             <!-- 
               Slot Dinamis: memungkinkan Anda mengubah tampilan kolom tertentu.
               Contoh saat menggunakan komponen:
@@ -74,13 +87,14 @@ const props = defineProps<{
           </td>
         </tr>
 
-        <!-- Empty State -->
+        <!-- Empty / loading -->
         <tr v-if="data.length === 0">
           <td
             :colspan="showCheckbox ? columns.length + 1 : columns.length"
             class="px-3 py-6 sm:px-6 sm:py-8 text-center text-gray-500"
           >
-            Data tidak tersedia
+            <span v-if="loading">Memuat data…</span>
+            <span v-else>Data tidak tersedia</span>
           </td>
         </tr>
       </tbody>

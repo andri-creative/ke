@@ -6,51 +6,51 @@ import {
   ShieldOutline,
   WalletOutline,
   PersonOutline,
-} from "@vicons/ionicons5";
-import { markRaw, type Component } from "vue";
+} from '@vicons/ionicons5'
+import { markRaw, type Component } from 'vue'
 
 export interface MenuItem {
-  label: string;
-  key: string;
-  icon: Component;
-  disabled?: boolean;
+  label: string
+  key: string
+  icon: Component
+  disabled?: boolean
 }
 
 export const menuOptions: MenuItem[] = [
   {
-    label: "Home",
-    key: "home",
+    label: 'Home',
+    key: 'home',
     icon: markRaw(HomeOutline),
   },
   {
-    label: "Category",
-    key: "category",
+    label: 'Category',
+    key: 'category',
     icon: markRaw(GridOutline),
   },
   {
-    label: "Role",
-    key: "role",
+    label: 'Role',
+    key: 'role',
     icon: markRaw(ShieldOutline),
   },
   {
-    label: "Expense",
-    key: "expense",
+    label: 'Expense',
+    key: 'expense',
     icon: markRaw(WalletOutline),
   },
   {
-    label: "Customer",
-    key: "customer",
+    label: 'Customer',
+    key: 'customer',
     icon: markRaw(PersonOutline),
   },
   {
-    label: "Profile",
-    key: "profile",
+    label: 'Profile',
+    key: 'profile',
     icon: markRaw(PeopleOutline),
   },
   {
-    label: "Settings",
-    key: "settings",
+    label: 'Settings',
+    key: 'settings',
     icon: markRaw(SettingsOutline),
     disabled: true,
   },
-];
+]

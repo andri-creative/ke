@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { authService } from "../services/authService";
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { authService } from '../services/authService'
 
-const router = useRouter();
-const email = ref("");
-const password = ref("");
-const isLoading = ref(false);
-const errorMessage = ref("");
+const router = useRouter()
+const email = ref('')
+const password = ref('')
+const isLoading = ref(false)
+const errorMessage = ref('')
 
 const handleLogin = async () => {
-  isLoading.value = true;
-  errorMessage.value = "";
+  isLoading.value = true
+  errorMessage.value = ''
 
   try {
-    await authService.login(email.value, password.value);
-    router.push("/home");
+    await authService.login(email.value, password.value)
+    router.push('/home')
   } catch (error) {
     errorMessage.value =
-      error instanceof Error ? error.message : "Terjadi kesalahan saat login.";
+      error instanceof Error ? error.message : 'Terjadi kesalahan saat login.'
   } finally {
-    isLoading.value = false;
+    isLoading.value = false
   }
-};
+}
 </script>
 
 <template>
@@ -80,7 +80,7 @@ const handleLogin = async () => {
           :disabled="isLoading"
           class="w-full py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-xl transition-colors duration-200 mt-2"
         >
-          {{ isLoading ? "Loading..." : "Continue" }}
+          {{ isLoading ? 'Loading...' : 'Continue' }}
         </button>
       </form>
     </div>
